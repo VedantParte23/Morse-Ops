@@ -2,20 +2,25 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include "traning.h"
+#include "supporting.h"
 
-void typewriter(char *text ,time_t seconds, long milliseconds);
-void wait(time_t seconds, long milliseconds);
+
 
 
 int main(){
 
 
-    int option;
-    char title[] = "|==MORSE OPS==|";
-    typewriter(title,0, 350);
+    int option = 0;
+    // char title[] = "MORSE OPS";
+    // typewriter(title,0, 250);
+    // printf("\n");
+    // wait(2,0);
+    char officer[] = "OFFICER WE NEED YOU!";
+    typewriter_fast(officer,100000000);
+    printf("\n");
     wait(2,0);
-    printf("\nOfficer we NEED YOU!!\n");
-    wait(2,0);
+    printf("Select level. (enter number to enter the value)\n");
     
     
     
@@ -27,19 +32,29 @@ int main(){
          printf("\n3.MEDIUM LEVEL");
          printf("\n4.HARD LEVEL");
          printf("\n5.EXIT GAME");
-
+         
          printf("\n\nEnter your level: ");
          if(scanf("%d",&option) != 1){
+            clear_buffer();
             printf("Please enter a valid character");
          }
         if (option < 0 || option > 5)
         {
             printf("Please Enter a valid level");
         }
+
+        switch (option)
+        {
+        case 1:
+            printf("");
+            break;
+        
+        default:
+            printf("This is impossible to print, IDK how you done this?");
+            break;
+        }
         
     }
-    
-    
     
     
 
@@ -47,41 +62,3 @@ int main(){
 }
 
 
-
-void typewriter(char *text, time_t seconds, long milliseconds){
-    
-    long nano_secods = milliseconds * 1000000;
-    
-    struct timespec time;
-    
-    time.tv_sec = seconds;
-    time.tv_nsec = nano_secods;
-    
-    for (int i = 0; text[i] != '\0'; i++)
-    {
-        printf("%c", text[i]);
-        fflush(stdout);
-        nanosleep(&time,NULL);
-    }
-    
-}
-
-
-void wait(time_t seconds,long milliseconds){
-    
-    long nano_secods = milliseconds * 1000000;
-
-    struct timespec time;
-
-    time.tv_sec = seconds;
-    time.tv_nsec = nano_secods;
-
-
-    nanosleep(&time,NULL);
-
-}
-
-void clear_buffer(){
-    char c;
-   while ((c = getchar()) != '\n' && c != EOF);
-}
