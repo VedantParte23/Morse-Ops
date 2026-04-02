@@ -8,6 +8,8 @@
 #include "supporting.h"
 #include "traning.h"
 
+static struct termios old_terminal;
+
 const char *morse_alphabet[] = {
     ".-", "-...", "-.-.", "-..", ".",
     "..-.", "--.", "....", "..", ".---",
@@ -16,104 +18,188 @@ const char *morse_alphabet[] = {
     "..-", "...-", ".--", "-..-", "-.--",
     "--.."};
 
-int traning_mode()
-{
 
-    // printf("\n\nCAPTAIN: \n");
-    // print_captain("WELCOME TO THE TRAINING OFFICER\n");
-    // wait(0,500);
-    // printf("\n\n\nPress enter to continue: ");
-    // getchar();
-    // system("clear");
+int input_function_wrapper(char*input){
 
-    // print_soldier("YES SIR!");
-    // printf("\n\n\nPress enter to continue: ");
-    // getchar();
-    // system("clear");
-
-    // printf("\n\nCAPTAIN: \n");
-    // print_captain("YOUR COMMIONED HERE FOR LEARNING MORSE CODE COMMUNICATION");
-    // wait(0,500);
-    // printf("\n\n\nPress enter to continue: ");
-    // getchar();
-    // system("clear");
-
-    // print_soldier("YES SIR");
-    // printf("\n\n\nPress enter to continue: ");
-    // getchar();
-    // system("clear");
-
-    // print_captain("YOU'LL LEARN HERE HOW TO SEND MORSE CODE TO OUR POSITIONS IN FRONT LINE TO ALRET THEN\nARE YOU READY?");
-    // wait(0,500);
-    // printf("\n\n\nPress enter to continue");
-    // getchar();
-    // system("clear");
-
-    // print_soldier("YES SIR! I'M READY TO SERVE MY COUNTRY");
-    // printf("\n\n\nPress enter to continue: ");
-    // getchar();
-    // system("clear");
-
-    // print_captain("NICE TO SEE YOUR ATTITUCE SOLDIER\nHERE IS NOW YOUR FIRST PART\n");
-    // wait(0,500);
-    // printf("\n\n\nPress enter to continue: ");
-    // getchar();
-    // system("clear");
-
-    print_captain("\n\nSEND 'ATTACK' TO THE FORWARD. USE 'J' FOR '.' AND K FOR '-'\n");
-    wait(0, 500);
-    printf("Press enter to continue: ");
-    getchar();
-    system("clear");
-
-
-    char *attack = "ATTACK";
+    char *attack = input;
     char print_morse[strlen(attack) * 6];
     change_str_to_morse(attack, print_morse);
 
-    new_terminal_setting();
+    char ch, answer[strlen(attack) * 6];//thought 4 adding exta 2 for safty
+    answer[0] = '\0';
 
-    char ch,  answer[strlen(attack) * 6];
-    int i = 0;
+    printf("The word is: %s \n\n", attack);
+    printf("The morse is : %s", print_morse);
+    printf("\nEnter to start");
+    printf("\n");
 
     clear_buffer();
+    new_terminal_setting();
+    int i = 0;
     while (1)
     {
+
         ch = getchar();
-        if(ch == 'J' || ch == 'j'){
+
+        if (ch == '\n' || ch == '\r')
+        {
+            break;
+        }
+        else if(ch == '/'){
+            printf("/");
+            fflush(stdout);
+            answer[i++] = '/';
+        }
+        else if (ch == 'J' || ch == 'j')
+        {
             printf(".");
             fflush(stdout);
 
             answer[i++] = '.';
         }
-        else if(ch == 'K' || ch == 'k'){
+        else if (ch == 'K' || ch == 'k')
+        {
             printf("-");
             fflush(stdout);
 
             answer[i++] = '-';
         }
-        else if(ch == 'q'){
+        else if (ch == 'q' || ch == 'Q')
+        {
             exit(EXIT_SUCCESS);
         }
         else if (ch == '\b' || ch == 127)
         {
             if (i > 0)
             {
+                
                 i--;
+                answer[i] = '\0';
                 printf("\b \b");
+                fflush(stdout);
             }
         }
-        
-        answer[i] = '\0';
+        else if (ch == ' ')
+        {
+            printf(" ");
+            fflush(stdout);
+            answer[i++] = ' ';
+        }
 
-        printf("\n INput: %s",answer);
-        
+        answer[i] = '\0';
+    }
+
+    atexit(normal_terminal);
+
+    if (strcmp(answer, print_morse) == 0)
+    {
+        printf("\n CAPTAIN: Correct!\n");
+        return 1;
+    }
+    else{
+        printf("\nWrong\n CAPTAIN: this was expected: %s", print_morse);
+        return 0;
     }
     
 
-    exit(EXIT_SUCCESS);
+    
+}
 
-    return 0;
+int traning_mode()
+{
+    clear_buffer();
+    int catch = 0, lev_sum = 0;
+    printf("\n\nCAPTAIN: \n");
+    print_captain("WELCOME TO THE TRANING OFFICER\n");
+    wait(0,500);
+    press_etr_to_continue();
+
+    print_soldier("YES SIR!");
+    press_etr_to_continue();
+
+    printf("\n\nCAPTAIN: \n");
+    print_captain("YOUR COMMIONED HERE FOR LEARNING MORSE CODE COMMUNICATION");
+    wait(0,500);
+    press_etr_to_continue();
+
+    print_soldier("YES SIR");
+    press_etr_to_continue();
+
+    print_captain("YOU'LL LEARN HERE HOW TO SEND MORSE CODE TO OUR POSITIONS IN FRONT LINE\n TO ALRET YOUR FORCES\nARE YOU READY?");
+    wait(0,500);
+    press_etr_to_continue();
+
+
+    print_soldier("YES SIR! I'M READY TO SERVE MY COUNTRY");
+    press_etr_to_continue();
+
+    print_captain("NICE TO SEE YOUR ATTITUCE SOLDIER\nHERE IS NOW YOUR FIRST PART\n");
+    wait(0,500);
+    press_etr_to_continue();
+    
+
+    //A
+    print_captain("\n\nSEND 'A' TO THE FORWARD. USE 'J' FOR '.' AND K FOR '-'\n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if(catch = input_function_wrapper("A") == 1){
+        lev_sum++;
+
+    }
+
+    //ATTACK
+    print_captain("\n\nSEND 'ATTACK'\n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if(catch = input_function_wrapper("ATTACK") == 1){
+        lev_sum++;
+    }
+
+    //BRAVO
+    print_captain("\n\nSEND 'BRAVO'\n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if(catch = input_function_wrapper("BRAVO") == 1){
+        lev_sum++;
+    }
+
+    //COPY THAT
+    print_captain("\n\nSEND 'COPY THAT'\n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if(catch = input_function_wrapper("COPY THAT") == 1){
+        lev_sum++;
+    }
+
+    //CHARLIE TANGO
+    print_captain("\n\nSEND 'CHARLIE TANGO'\n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if(catch = input_function_wrapper("CHARLIE TANGO") == 1){
+        lev_sum++;
+    }
+    press_etr_to_continue();
+    if (lev_sum >= 4)
+    {
+        print_captain("GOOD JOB SOLDIER YOU SCORED GOOD\n YOU'RE READY FOR FRONTLINE");
+        press_etr_to_continue();
+        print_soldier("THANK YOU SIR! IT IS MY HONOR TO SERVE MY COUNTRY!");
+        press_etr_to_continue();
+    }
+    else if(lev_sum <= 3){
+        print_captain("SOLDIER YOU NEED IMPROVEMENTS\nBUT DUE TO LACK OF MEN WE'RE SENDING YOU TO FRONTLINE");
+        press_etr_to_continue();
+        print_soldier("THANKYOU SIR! I WILL WORK HARDER TO IMPROVE MYSELF");
+        press_etr_to_continue();
+    }
+    
+    
+    return 1;
 }
 
 void change_str_to_morse(char *word, char *morse)
@@ -144,26 +230,24 @@ void change_str_to_morse(char *word, char *morse)
     {
         morse[length - 1] = '\0';
     }
-
-    printf("The word is: %s \n\n", word);
-    printf("The morse is : %s", morse);
-    printf("\n\n");
 }
 
 void new_terminal_setting()
 {
-    printf("New terminal settings \n");
-
-    struct termios new_terminal, old_terminal;
+    struct termios new_terminal;
     tcgetattr(STDIN_FILENO, &old_terminal);
+
     new_terminal = old_terminal;
+
     new_terminal.c_lflag &= ~(ECHO | ICANON);
+
     tcsetattr(STDIN_FILENO, TCSANOW, &new_terminal);
 }
 
-// void normal_terminal(void (*new_terminal_setting)()){
-//     tcsetattr(STDIN_FILENO, TCSANOW, &oldterminal);
-// }
+void normal_terminal()
+{
+    tcsetattr(STDIN_FILENO, TCSANOW, &old_terminal);
+}
 
 void easy_mode()
 {
@@ -176,4 +260,11 @@ void medium_mode()
 void hard_mode()
 {
     printf("This is hard mode");
+}
+
+
+void press_etr_to_continue(){
+    printf("\n\nPress enter to continue: ");
+    getchar();
+    system("clear");
 }

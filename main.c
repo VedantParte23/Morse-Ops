@@ -8,16 +8,16 @@
 int main()
 {
 
-    int option = 1;
-    // char title[] = "MORSE OPS";
-    // typewriter(title, 0, 250);
-    // printf("\n");
-    // wait(2, 0);
-    // char officer[] = "OFFICER WE NEED YOU!";
-    // typewriter_fast(officer, 100000000);
-    // printf("\n");
-    // wait(2, 0);
-    // printf("Select level. (enter number to enter the value)\n");
+    int option = 0;
+    char title[] = "MORSE OPS";
+    typewriter(title, 0, 250);
+    printf("\n");
+    wait(2, 0);
+    char officer[] = "OFFICER WE NEED YOU!";
+    typewriter_fast(officer, 100000000);
+    printf("\n");
+    wait(2, 0);
+    printf("Select level. (enter number to enter the value)\n");
 
     while (option != 5)
     {
@@ -28,21 +28,24 @@ int main()
         printf("\n4.HARD LEVEL");
         printf("\n5.EXIT GAME");
 
-        // printf("\n\nEnter your level: ");
-        // if (scanf("%d", &option) != 1)
-        // {
-        //     clear_buffer();
-        //     printf("Please enter a valid character");
-        // }
-        // if (option < 0 || option > 5)
-        // {
-        //     printf("Please Enter a valid level");
-        // }
-
+        printf("\n\nEnter your level: ");
+        if (scanf("%d", &option) != 1)
+        {
+            clear_buffer();
+            printf("Please enter a valid character");
+        }
+        if (option < 0 || option > 5)
+        {
+            printf("Please Enter a valid level");
+        }
+        
         switch (option)
         {
         case 1:
-            traning_mode();
+
+            if(traning_mode() != 1){
+                perror("Something went wrong");
+            }    
             break;
         case 2:
             easy_mode();
