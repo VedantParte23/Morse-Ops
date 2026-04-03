@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
-#include "traning.h"
+#include "level.h"
 #include "supporting.h"
 
 int main()

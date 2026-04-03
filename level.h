@@ -1,9 +1,9 @@
-#ifndef TRANING_H
-#define TRANING_H
+#ifndef LEVEL_H
+#define LEVEL_H
 #define NANO_SEC 100000000
 
 void change_str_to_morse(char *word, char *morse);
-int input_function_wrapper(char*input);
+int input_function_wrapper(char *input, time_t timer);
 void new_terminal_setting();
 void normal_terminal();
 
