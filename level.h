@@ -7,11 +7,13 @@ int input_function_wrapper(char *input, time_t timer);
 void new_terminal_setting();
 void normal_terminal();
 
-int traning_mode();
 void press_etr_to_continue();
 
+int traning_mode();
 void easy_mode();
 void medium_mode();
 void hard_mode();
+void reverse_mode();
+void practice_mode();
 
 #endif

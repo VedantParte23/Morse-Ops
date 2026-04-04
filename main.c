@@ -8,16 +8,16 @@
 int main()
 {
 
-    int option = 0;
-    char title[] = "MORSE OPS";
-    typewriter(title, 0, 250);
-    printf("\n");
-    wait(2, 0);
-    char officer[] = "OFFICER WE NEED YOU!";
-    typewriter_fast(officer, 100000000);
-    printf("\n");
-    wait(2, 0);
-    printf("Select level. (enter number to enter the value)\n");
+    int option = 2;
+    // char title[] = "MORSE OPS";
+    // typewriter(title, 0, 250);
+    // printf("\n");
+    // wait(2, 0);
+    // char officer[] = "OFFICER WE NEED YOU!";
+    // typewriter_fast(officer, 100000000);
+    // printf("\n");
+    // wait(2, 0);
+    // printf("Select level. (enter number to enter the value)\n");
 
     while (option != 5)
     {
@@ -45,18 +45,22 @@ int main()
 
             if(traning_mode() != 1){
                 perror("Something went wrong");
+                atexit(normal_terminal);
             }    
             break;
         case 2:
             easy_mode();
+            atexit(normal_terminal);
             break;
 
         case 3:
             medium_mode();
+            atexit(normal_terminal);
             break;
 
         case 4:
             hard_mode();
+            atexit(normal_terminal);
             break;
 
         case 5:

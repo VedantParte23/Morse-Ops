@@ -21,29 +21,32 @@ const char *morse_alphabet[] = {
 int input_function_wrapper(char *input, time_t timer)
 {
 
-    if (timer == 0)
-    {
-        printf("have todo something for traning");
-
-    }
-    time_t start = time(NULL);
-    
-
     char *attack = input;
-    char print_morse[strlen(attack) * 6];
+    char print_morse[1024];
     change_str_to_morse(attack, print_morse);
 
-    char ch, answer[strlen(attack) * 6]; // thought 4 adding exta 2 for safty
+    char ch, answer[1024];
     answer[0] = '\0';
 
-    printf("The word is: %s \n\n", attack);
-    printf("The morse is : %s", print_morse);
-    printf("\nEnter to start");
-    printf("\n");
+    printf("--------------------------------------------\n");
+    printf("TARGET WORD : %s\n", attack);
+    printf("REQUIRED    : %s\n", print_morse);
+    printf("--------------------------------------------\n");
+    printf("Controls: J = [.]  K = [-]  SPACE = [/]  BACKSPACE = Undo\n");
+    if (timer != 0)
+    {
+        printf("PRESS ENTER TO START THE CLOCK...\n\n");
+    }
+    else
+    {
+        printf("PRESS ENTER TO START: \n\n");
+    }
 
     clear_buffer();
     new_terminal_setting();
     int i = 0;
+
+    time_t start = time(NULL);
     while (1)
     {
 
@@ -98,42 +101,34 @@ int input_function_wrapper(char *input, time_t timer)
         answer[i] = '\0';
     }
 
-    atexit(normal_terminal);
-
     time_t end = time(NULL);
 
-    double time_diff = difftime(end ,start);
+    double time_diff = difftime(end, start);
 
-    if (timer == 0 && strcmp(answer, print_morse) == 0 )
+    if (i > 0 && answer[i - 1] == ' ')
     {
-        printf("\n CAPTAIN: Correct!\n");
-        return 1;
+        answer[i - 1] = '\0';
     }
-    else if (timer == 0 && strcmp(answer, print_morse) != 0)
+
+    int correct = (strcmp(answer, print_morse) == 0);
+
+    if (correct)
     {
-        printf("\nWrong\n CAPTAIN: this was expected: %s", print_morse);
-        return 0;
-    }
-    
-    else if (strcmp(answer, print_morse) == 0 && time_diff < timer)
-    {
-        printf("\n CAPTAIN: Correct!\n");
-        return 1;
-    }
-    else if (time_diff > timer)
-    {
-        printf("\nCAPTAIN: YOU FAILED ON TIME");
-        return 0;
+        if (timer == 0 || time_diff <= timer)
+        {
+            printf("\nCAPTIAN: CORRECT, GOOD JOB SOLDIER\n\n");
+            return 1;
+        }
+        else
+        {
+            printf("\nCAPTAIN: CORRECT BUT TOOO SLOW SOLDIER\n\n");
+        }
     }
     else
     {
-        printf("\nWrong\n CAPTAIN: this was expected: %s", print_morse);
+        printf("\nCAPTAIN: WRONG,\nTHIS WAS EXPECTED: %s\n\n", print_morse);
         return 0;
     }
-
-    
-    
-
 }
 
 int traning_mode()
@@ -173,7 +168,7 @@ int traning_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("A", 0) == 1)
+    if ((catch = input_function_wrapper("A", 0)) == 1)
     {
         lev_sum++;
     }
@@ -183,7 +178,7 @@ int traning_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ATTACK", 0) == 1)
+    if ((catch = input_function_wrapper("ATTACK", 0)) == 1)
     {
         lev_sum++;
     }
@@ -193,7 +188,7 @@ int traning_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("BRAVO", 0) == 1)
+    if ((catch = input_function_wrapper("BRAVO", 0)) == 1)
     {
         lev_sum++;
     }
@@ -203,7 +198,7 @@ int traning_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("COPY THAT", 0) == 1)
+    if ((catch = input_function_wrapper("COPY THAT", 0)) == 1)
     {
         lev_sum++;
     }
@@ -213,7 +208,7 @@ int traning_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("CHARLIE TANGO", 0) == 1)
+    if ((catch = input_function_wrapper("CHARLIE TANGO", 0)) == 1)
     {
         lev_sum++;
     }
@@ -236,6 +231,268 @@ int traning_mode()
     return 1;
 }
 
+void easy_mode()
+{
+    system("clear");
+    clear_buffer();
+    int catch = 0, lev_sum = 0;
+    printf("\n\nCAPTAIN: \n");
+    print_captain("WELCOME EASY MODE OFFICER. HERE YOU'LL HAVE JUST 10 SECONDS TO SEND A MESSAGE\n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    print_soldier("YES SIR! I'LL TRY MY HARD");
+    press_etr_to_continue();
+
+    print_captain("UNFORTUNATELY THE STUDENT WRITING THIS CODE ISN'T SKILLED ENOUGH TO ADD A CLOCK\nSO YOU'LL GET TO KNOW RESULT AFTER YOU SUBMIT");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    print_soldier("YES SIR! I'LL TRY MY BEST");
+    press_etr_to_continue();
+
+    print_captain("GREAT! LETS START: ");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    printarmy();
+    press_etr_to_continue();
+
+    print_captain("ENEMY ARE APPROACHIN SEND 'ENEMY APPROACHING'");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if ((catch = input_function_wrapper("ENEMY APPROACHING", 10)) == 1)
+    {
+        lev_sum++;
+    }
+
+    printf("\n\nCAPTAIN: SEND MESSAGE 'ENEMY WEST' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if ((catch = input_function_wrapper("ENEMY WEST", 10)) == 1)
+    {
+        lev_sum++;
+    }
+
+    printf("\n\nCAPTAIN: SEND MESSAGE 'MULTIPLE ENEMY' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if ((catch = input_function_wrapper("MULTIPLE ENEMY", 10)) == 1)
+    {
+        lev_sum++;
+    }
+
+    printf("\n\nCAPTAIN: SEND MESSAGE 'SET AMBUSH' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if ((catch = input_function_wrapper("SET AMBUSH", 10)) == 1)
+    {
+        lev_sum++;
+    }
+
+    printf("\n\nCAPTAIN: SEND MESSAGE 'OPEN FIRE' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if ((catch = input_function_wrapper("OPEN FIRE", 10)) == 1)
+    {
+        lev_sum++;
+    }
+
+    if (lev_sum == 5)
+    {
+        typewriter_fast("COMMANDING OFFICER: WE WON THE BATTLE!!!\n", NANO_SEC);
+        wait(0, 250);
+        typewriter_fast("CAPTAIN: GOOD JOB SOLDIER\n", NANO_SEC);
+    }
+    else if (lev_sum >= 3 && lev_sum < 5)
+    {
+        typewriter_fast("\nWE WON THE BATTLE BUT THERE ARE MULTIPLE CASULITIES\nSEND MEDICS\n", NANO_SEC);
+        wait(0, 250);
+        typewriter_fast("\nCAPTAIN: GOOD JOB SOLDIER. BUT YOU NEED LOT BETTERMENT\n", NANO_SEC);
+    }
+    else if (lev_sum < 3)
+    {
+        typewriter_fast("\nAMBUSH FAILED BUT WE HOLDING THE LINE\nSEND RENFORCEMENTS AND MEDICS\nWE TOOK A LOT CASULITIES\n", NANO_SEC);
+        wait(0, 250);
+        typewriter_fast("\nCAPTAIN: SOLDIER YOU NEED YOU LEAVE THIS JOB TBH. SKILLS ISSUES!\n", NANO_SEC);
+    }
+}
+void medium_mode()
+{
+    system("clear");
+    clear_buffer();
+    int catch = 0, lev_sum = 0;
+    printf("\n\nCAPTAIN: \n");
+    print_captain("WELCOME MEDIUM MODE OFFICER. HERE YOU'LL HAVE JUST 7 SECONDS TO SEND A MESSAGE\n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    print_soldier("YES SIR!");
+    press_etr_to_continue();
+
+    print_captain("THERE IS NOT CLOCK YOU'LL GET TIME UPDATE AFTER YOU SUBMIT");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    print_soldier("YES SIR! I UNDERSTAND HIS SKILL ISSUES!");
+    press_etr_to_continue();
+
+    print_captain("GREAT! LETS START: ");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (catch = input_function_wrapper("ATTACK", 7) == 1)
+    {
+        lev_sum++;
+    }
+
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (catch = input_function_wrapper("ATTACK", 7) == 1)
+    {
+        lev_sum++;
+    }
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (catch = input_function_wrapper("ATTACK", 7) == 1)
+    {
+        lev_sum++;
+    }
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (catch = input_function_wrapper("ATTACK", 7) == 1)
+    {
+        lev_sum++;
+    }
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (lev_sum >= 4)
+    {
+        print_captain("GOOD JOB SOLDIER YOU SCORED GOOD\n YOU'RE READY FOR FRONTLINE");
+        press_etr_to_continue();
+        print_soldier("THANK YOU SIR! IT IS MY HONOR TO SERVE MY COUNTRY!");
+        press_etr_to_continue();
+    }
+    else if (lev_sum <= 3)
+    {
+        print_captain("SOLDIER YOU NEED IMPROVEMENTS\nBUT DUE TO LACK OF MEN WE'RE SENDING YOU TO FRONTLINE");
+        press_etr_to_continue();
+        print_soldier("THANKYOU SIR! I WILL WORK HARDER TO IMPROVE MYSELF");
+        press_etr_to_continue();
+    }
+}
+void hard_mode()
+{
+    system("clear");
+    clear_buffer();
+    int catch = 0, lev_sum = 0;
+    printf("\n\nCAPTAIN: \n");
+    print_captain("WELCOME HARD MODE OFFICER. HERE YOU'LL HAVE JUST 5 SECONDS TO SEND A MESSAGE\n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    print_soldier("YES SIR! I'LL TRY MY HARD");
+    press_etr_to_continue();
+
+    print_captain("AS USUAL YOU'LL GET TO KNOW RESULT AFTER YOU INPUT\nGUESS I SHOULD STOP THIS");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    print_soldier("DEFINETLY SIR!");
+    press_etr_to_continue();
+
+    print_captain("GREAT! LETS START: ");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    // aasci of tank story
+
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (catch = input_function_wrapper("ATTACK", 5) == 1)
+    {
+        lev_sum++;
+    }
+
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (catch = input_function_wrapper("ATTACK", 5) == 1)
+    {
+        lev_sum++;
+    }
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (catch = input_function_wrapper("ATTACK", 5) == 1)
+    {
+        lev_sum++;
+    }
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (catch = input_function_wrapper("ATTACK", 5) == 1)
+    {
+        lev_sum++;
+    }
+    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    wait(0, 500);
+    press_etr_to_continue();
+
+    if (lev_sum >= 4)
+    {
+        print_captain("GOOD JOB SOLDIER YOU SCORED GOOD\n YOU'RE READY FOR FRONTLINE");
+        press_etr_to_continue();
+        print_soldier("THANK YOU SIR! IT IS MY HONOR TO SERVE MY COUNTRY!");
+        press_etr_to_continue();
+    }
+    else if (lev_sum <= 3)
+    {
+        print_captain("SOLDIER YOU NEED IMPROVEMENTS\nBUT DUE TO LACK OF MEN WE'RE SENDING YOU TO FRONTLINE");
+        press_etr_to_continue();
+        print_soldier("THANKYOU SIR! I WILL WORK HARDER TO IMPROVE MYSELF");
+        press_etr_to_continue();
+    }
+}
+
+void reverse_mode()
+{
+    printf("CAPTAIN: THIS IS WHERE WE'LL GIVE YOU RANDOM MORSE CODE AND YOU HAVE TO WRITE THE WORD!\nDUE TO STUDENT'S ONGOING EXAMS HE'S UNABLE TO COMPLETE THIS\nWILL BE ADDED SOON");
+}
+
+void practice_mode(){
+    print_captain("CAPTAIN: HERE YOU'LL GET RANDOM WORDS AND YOU HAVE TO COMPLETE THEM YOU CAN CHOOSE TIME IN SECONDS\nGOING TODO IT SOON");
+}
+
+void press_etr_to_continue()
+{
+    printf("\n\nPress enter to continue: ");
+    getchar();
+    system("clear");
+}
+
 void change_str_to_morse(char *word, char *morse)
 {
 
@@ -245,7 +502,7 @@ void change_str_to_morse(char *word, char *morse)
     {
         if (word[i] == ' ')
         {
-            strcat(morse, " / ");
+            strcat(morse, "/");
         }
         else
         {
@@ -281,27 +538,4 @@ void new_terminal_setting()
 void normal_terminal()
 {
     tcsetattr(STDIN_FILENO, TCSANOW, &old_terminal);
-}
-
-
-
-void easy_mode()
-{
-    print_captain("WELCOME TO EASY MODE SOLDIER YOU'LL GET JUST 10 SECONDS TO PASS EVERY MESSAGE");
-    
-}
-void medium_mode()
-{
-    printf("This is medicum mode");
-}
-void hard_mode()
-{
-    printf("This is hard mode");
-}
-
-void press_etr_to_continue()
-{
-    printf("\n\nPress enter to continue: ");
-    getchar();
-    system("clear");
 }

@@ -9,5 +9,6 @@ void wait(time_t seconds, long milliseconds);
 void clear_buffer();
 void print_soldier(char* reply);
 void print_captain(char* order);
+void printarmy();
 
 #endif
