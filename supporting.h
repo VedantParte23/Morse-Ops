@@ -10,5 +10,7 @@ void clear_buffer();
 void print_soldier(char* reply);
 void print_captain(char* order);
 void printarmy();
+void shoot_tank();
+void destroyed_tank();
 
 #endif

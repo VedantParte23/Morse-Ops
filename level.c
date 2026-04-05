@@ -109,6 +109,7 @@ int input_function_wrapper(char *input, time_t timer)
     {
         answer[i - 1] = '\0';
     }
+    
 
     int correct = (strcmp(answer, print_morse) == 0);
 
@@ -197,6 +198,7 @@ int traning_mode()
     print_captain("\n\nSEND 'COPY THAT'\n");
     wait(0, 500);
     press_etr_to_continue();
+    
 
     if ((catch = input_function_wrapper("COPY THAT", 0)) == 1)
     {
@@ -237,7 +239,7 @@ void easy_mode()
     clear_buffer();
     int catch = 0, lev_sum = 0;
     printf("\n\nCAPTAIN: \n");
-    print_captain("WELCOME EASY MODE OFFICER. HERE YOU'LL HAVE JUST 10 SECONDS TO SEND A MESSAGE\n");
+    print_captain("WELCOME EASY MODE OFFICER. HERE YOU'LL HAVE JUST 15 SECONDS TO SEND A MESSAGE\n");
     wait(0, 500);
     press_etr_to_continue();
 
@@ -261,8 +263,8 @@ void easy_mode()
     print_captain("ENEMY ARE APPROACHIN SEND 'ENEMY APPROACHING'");
     wait(0, 500);
     press_etr_to_continue();
-
-    if ((catch = input_function_wrapper("ENEMY APPROACHING", 10)) == 1)
+    
+    if ((catch = input_function_wrapper("ENEMY APPROACHING", 20)) == 1)
     {
         lev_sum++;
     }
@@ -271,7 +273,7 @@ void easy_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if ((catch = input_function_wrapper("ENEMY WEST", 10)) == 1)
+    if ((catch = input_function_wrapper("ENEMY WEST", 20)) == 1)
     {
         lev_sum++;
     }
@@ -280,7 +282,7 @@ void easy_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if ((catch = input_function_wrapper("MULTIPLE ENEMY", 10)) == 1)
+    if ((catch = input_function_wrapper("MULTIPLE ENEMY", 20)) == 1)
     {
         lev_sum++;
     }
@@ -289,7 +291,7 @@ void easy_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if ((catch = input_function_wrapper("SET AMBUSH", 10)) == 1)
+    if ((catch = input_function_wrapper("SET AMBUSH", 20)) == 1)
     {
         lev_sum++;
     }
@@ -298,7 +300,7 @@ void easy_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if ((catch = input_function_wrapper("OPEN FIRE", 10)) == 1)
+    if ((catch = input_function_wrapper("OPEN FIRE", 20)) == 1)
     {
         lev_sum++;
     }
@@ -328,7 +330,7 @@ void medium_mode()
     clear_buffer();
     int catch = 0, lev_sum = 0;
     printf("\n\nCAPTAIN: \n");
-    print_captain("WELCOME MEDIUM MODE OFFICER. HERE YOU'LL HAVE JUST 7 SECONDS TO SEND A MESSAGE\n");
+    print_captain("WELCOME MEDIUM MODE OFFICER. HERE YOU'LL HAVE JUST 10 SECONDS TO SEND A MESSAGE\n");
     wait(0, 500);
     press_etr_to_continue();
 
@@ -346,56 +348,65 @@ void medium_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    printf("\n\nCAPTAIN: SCOUT REPORTED ENEMY FORM PATROL SIGHED TO EAST OF BRIDGE. SEND 'ENEMY EAST'\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ATTACK", 7) == 1)
+    if (catch = input_function_wrapper("ENEMY EAST", 10) == 1)
     {
         lev_sum++;
     }
 
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    printf("\n\nCAPTAIN: ENEMY MOVING NORTHWEST. SEND 'ENEMY NOTHWEST'\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ATTACK", 7) == 1)
+    if (catch = input_function_wrapper("ENEMY NORTHWEST", 10) == 1)
     {
         lev_sum++;
     }
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    printf("\n\nCAPTAIN: ARTILLERY SPOTTED SEND 'SHELLING NORTH'\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ATTACK", 7) == 1)
+    if (catch = input_function_wrapper("SHELLING NORTH", 10) == 1)
     {
         lev_sum++;
     }
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    printf("\n\nCAPTAIN: INFANTRY MOVING THOUGH BRIDGE SEND 'KILL BRIDGE'\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ATTACK", 7) == 1)
+    if (catch = input_function_wrapper("KILL BRIDGE", 10) == 1)
     {
         lev_sum++;
     }
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    printf("\n\nCAPTAIN: EMEMY COMMANDER FOUND SEND 'FOUND GORGE SR'\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (lev_sum >= 4)
+    if (catch = input_function_wrapper("FOUND GORGE SR", 10) == 1)
     {
-        print_captain("GOOD JOB SOLDIER YOU SCORED GOOD\n YOU'RE READY FOR FRONTLINE");
-        press_etr_to_continue();
-        print_soldier("THANK YOU SIR! IT IS MY HONOR TO SERVE MY COUNTRY!");
-        press_etr_to_continue();
+        lev_sum++;
     }
-    else if (lev_sum <= 3)
+
+    if (lev_sum == 5)
     {
-        print_captain("SOLDIER YOU NEED IMPROVEMENTS\nBUT DUE TO LACK OF MEN WE'RE SENDING YOU TO FRONTLINE");
-        press_etr_to_continue();
-        print_soldier("THANKYOU SIR! I WILL WORK HARDER TO IMPROVE MYSELF");
-        press_etr_to_continue();
+        typewriter_fast("COMMANDING OFFICER: WE CAPTURED THERE COMMANDER!!!\n", NANO_SEC);
+        wait(0, 250);
+        typewriter_fast("CAPTAIN: GOOD JOB SOLDIER\n", NANO_SEC);
+    }
+    else if (lev_sum >= 3 && lev_sum < 5)
+    {
+        typewriter_fast("\nWE BLEW THE BRIDGE\nBUT GEORGE SR ESCAPED\n", NANO_SEC);
+        wait(0, 250);
+        typewriter_fast("\nCAPTAIN: GOOD JOB SOLDIER. BUT YOU NEED LOT BETTERMENT\n", NANO_SEC);
+    }
+    else if (lev_sum < 3)
+    {
+        typewriter_fast("\EMENY CHARGING\nSEND RENFORCEMENTS\nWE CAN'T BLEW THE BRIDGE\n", NANO_SEC);
+        wait(0, 250);
+        typewriter_fast("\nCAPTAIN: SOLDIER YOU NEED YOU LEAVE FOR TRANING ASAP\n", NANO_SEC);
     }
 }
 void hard_mode()
@@ -404,11 +415,11 @@ void hard_mode()
     clear_buffer();
     int catch = 0, lev_sum = 0;
     printf("\n\nCAPTAIN: \n");
-    print_captain("WELCOME HARD MODE OFFICER. HERE YOU'LL HAVE JUST 5 SECONDS TO SEND A MESSAGE\n");
+    print_captain("WELCOE HARD MODE OFFICER. HERE YOU'LL HAVE JUST 7 SECONDS TO SEND A MESSAGE\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    print_soldier("YES SIR! I'LL TRY MY HARD");
+    print_soldier("YES SIR!");
     press_etr_to_continue();
 
     print_captain("AS USUAL YOU'LL GET TO KNOW RESULT AFTER YOU INPUT\nGUESS I SHOULD STOP THIS");
@@ -422,59 +433,65 @@ void hard_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    // aasci of tank story
-
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    printf("\n\nCAPTAIN: ENEMY TANKS SIGHTED WEST SEND 'TANK WEST'\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ATTACK", 5) == 1)
+    if (catch = input_function_wrapper("TANK WEST", 7) == 1)
     {
         lev_sum++;
     }
 
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    printf("\n\nCAPTAIN: SNIPER SPOTTED SEND 'SPINER AHEAD'\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ATTACK", 5) == 1)
+    if (catch = input_function_wrapper("SPINER AHEAD", 7) == 1)
     {
         lev_sum++;
     }
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+    printf("\n\nCAPTAIN: TANKS CAME ON LINE SEND 'DEPLOY MANPAD'\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ATTACK", 5) == 1)
+    if (catch = input_function_wrapper("DEPLOY MANPAD", 7) == 1)
     {
         lev_sum++;
     }
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
+
+    printf("\n\nCAPTAIN: SHOOT TANK!!!\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ATTACK", 5) == 1)
+    if (catch = input_function_wrapper("SHOOT TANK", 7) == 1)
     {
+        shoot_tank();
+        wait(0, 250);
+        press_etr_to_continue();
+        destroyed_tank();
+        press_etr_to_continue();
         lev_sum++;
     }
-    print_captain("\n\nCAPTAIN: SEND MESSAGE 'SOME_BULLSHIT' \n");
-    wait(0, 500);
-    press_etr_to_continue();
 
-    if (lev_sum >= 4)
+    if (lev_sum == 5)
     {
-        print_captain("GOOD JOB SOLDIER YOU SCORED GOOD\n YOU'RE READY FOR FRONTLINE");
-        press_etr_to_continue();
-        print_soldier("THANK YOU SIR! IT IS MY HONOR TO SERVE MY COUNTRY!");
-        press_etr_to_continue();
+        typewriter_fast("COMMANDING OFFICER: WE DESTROYED THERE TANK\n", NANO_SEC);
+        wait(0, 250);
+        typewriter_fast("CAPTAIN: GOOD JOB SOLDIER\n", NANO_SEC);
     }
-    else if (lev_sum <= 3)
+    else if (lev_sum >= 3 && lev_sum < 5)
     {
-        print_captain("SOLDIER YOU NEED IMPROVEMENTS\nBUT DUE TO LACK OF MEN WE'RE SENDING YOU TO FRONTLINE");
-        press_etr_to_continue();
-        print_soldier("THANKYOU SIR! I WILL WORK HARDER TO IMPROVE MYSELF");
-        press_etr_to_continue();
+        typewriter_fast("\nWE CLEARED THE SNIPER\n", NANO_SEC);
+        wait(0, 250);
+        typewriter_fast("\nCAPTAIN: GOOD JOB SOLDIER. BUT YOU NEED LOT BETTERMENT\n", NANO_SEC);
     }
+    else if (lev_sum < 3)
+    {
+        typewriter_fast("\nENEMY TANK COLUM ADVANCEING\nSEND AIRSOPPORT\n", NANO_SEC);
+        wait(0, 250);
+        typewriter_fast("\nCAPTAIN: SOLDIER YOU NEED YOU LEAVE THIS JOB!\n", NANO_SEC);
+    }
+    
 }
 
 void reverse_mode()
@@ -482,7 +499,8 @@ void reverse_mode()
     printf("CAPTAIN: THIS IS WHERE WE'LL GIVE YOU RANDOM MORSE CODE AND YOU HAVE TO WRITE THE WORD!\nDUE TO STUDENT'S ONGOING EXAMS HE'S UNABLE TO COMPLETE THIS\nWILL BE ADDED SOON");
 }
 
-void practice_mode(){
+void practice_mode()
+{
     print_captain("CAPTAIN: HERE YOU'LL GET RANDOM WORDS AND YOU HAVE TO COMPLETE THEM YOU CAN CHOOSE TIME IN SECONDS\nGOING TODO IT SOON");
 }
 
