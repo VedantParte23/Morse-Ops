@@ -5,10 +5,11 @@
 #include "level.h"
 #include "supporting.h"
 
+
 int main()
 {
 
-    int option = 2;
+    int option = 0;
     // char title[] = "MORSE OPS";
     // typewriter(title, 0, 250);
     // printf("\n");
@@ -19,6 +20,8 @@ int main()
     // wait(2, 0);
     // printf("Select level. (enter number to enter the value)\n");
 
+    audio_init();
+    atexit(audio_cleanup);
     while (option != 5)
     {
         printf("\n︻デ═一");
@@ -36,9 +39,10 @@ int main()
         }
         if (option < 0 || option > 5)
         {
+            clear_buffer();
             printf("Please Enter a valid level");
         }
-        
+        clear_buffer();
         switch (option)
         {
         case 1:

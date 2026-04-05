@@ -5,10 +5,30 @@
 #include <termios.h>
 #include <ctype.h>
 #include <time.h>
+
+#define MINIAUDIO_IMPLEMENTATION
+#include "miniaudio.h"
+
 #include "supporting.h"
 #include "level.h"
 
 static struct termios old_terminal;
+static ma_engine engine;
+
+int audio_init(){
+    if (ma_engine_init(NULL, &engine) != MA_SUCCESS)
+    {
+        printf("Failed to init audio");
+        return -1;
+    }
+    return 0;
+    
+}
+
+
+void audio_cleanup(){
+    ma_engine_uninit(&engine);
+}
 
 const char *morse_alphabet[] = {
     ".-", "-...", "-.-.", "-..", ".",
@@ -60,20 +80,21 @@ int input_function_wrapper(char *input, time_t timer)
         {
             printf("/");
             fflush(stdout);
+            ma_engine_play_sound(&engine, "assests/single_morse.wav", NULL);
             answer[i++] = '/';
         }
         else if (ch == 'J' || ch == 'j')
         {
             printf(".");
             fflush(stdout);
-
+            ma_engine_play_sound(&engine, "assests/single_morse.wav", NULL); 
             answer[i++] = '.';
         }
         else if (ch == 'K' || ch == 'k')
         {
             printf("-");
             fflush(stdout);
-
+            ma_engine_play_sound(&engine, "assests/single_morse.wav", NULL);
             answer[i++] = '-';
         }
         else if (ch == 'q' || ch == 'Q')
@@ -137,32 +158,32 @@ int traning_mode()
     system("clear");
     clear_buffer();
     int catch = 0, lev_sum = 0;
-    printf("\n\nCAPTAIN: \n");
-    print_captain("WELCOME TO THE TRANING OFFICER\n");
-    wait(0, 500);
-    press_etr_to_continue();
+    // printf("\n\nCAPTAIN: \n");
+    // print_captain("WELCOME TO THE TRANING OFFICER\n");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
-    print_soldier("YES SIR!");
-    press_etr_to_continue();
+    // print_soldier("YES SIR!");
+    // press_etr_to_continue();
 
-    printf("\n\nCAPTAIN: \n");
-    print_captain("YOUR COMMIONED HERE FOR LEARNING MORSE CODE COMMUNICATION");
-    wait(0, 500);
-    press_etr_to_continue();
+    // printf("\n\nCAPTAIN: \n");
+    // print_captain("YOUR COMMIONED HERE FOR LEARNING MORSE CODE COMMUNICATION");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
-    print_soldier("YES SIR");
-    press_etr_to_continue();
+    // print_soldier("YES SIR");
+    // press_etr_to_continue();
 
-    print_captain("YOU'LL LEARN HERE HOW TO SEND MORSE CODE TO OUR POSITIONS IN FRONT LINE\n TO ALRET YOUR FORCES\nARE YOU READY?");
-    wait(0, 500);
-    press_etr_to_continue();
+    // print_captain("YOU'LL LEARN HERE HOW TO SEND MORSE CODE TO OUR POSITIONS IN FRONT LINE\n TO ALRET YOUR FORCES\nARE YOU READY?");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
-    print_soldier("YES SIR! I'M READY TO SERVE MY COUNTRY");
-    press_etr_to_continue();
+    // print_soldier("YES SIR! I'M READY TO SERVE MY COUNTRY");
+    // press_etr_to_continue();
 
-    print_captain("NICE TO SEE YOUR ATTITUCE SOLDIER\nHERE IS NOW YOUR FIRST PART\n");
-    wait(0, 500);
-    press_etr_to_continue();
+    // print_captain("NICE TO SEE YOUR ATTITUCE SOLDIER\nHERE IS NOW YOUR FIRST PART\n");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
     // A
     print_captain("\n\nSEND 'A' TO THE FORWARD. USE 'J' FOR '.' AND K FOR '-'\n");
@@ -238,27 +259,27 @@ void easy_mode()
     system("clear");
     clear_buffer();
     int catch = 0, lev_sum = 0;
-    printf("\n\nCAPTAIN: \n");
-    print_captain("WELCOME EASY MODE OFFICER. HERE YOU'LL HAVE JUST 15 SECONDS TO SEND A MESSAGE\n");
-    wait(0, 500);
-    press_etr_to_continue();
+    // printf("\n\nCAPTAIN: \n");
+    // print_captain("WELCOME EASY MODE OFFICER. HERE YOU'LL HAVE JUST 15 SECONDS TO SEND A MESSAGE\n");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
-    print_soldier("YES SIR! I'LL TRY MY HARD");
-    press_etr_to_continue();
+    // print_soldier("YES SIR! I'LL TRY MY HARD");
+    // press_etr_to_continue();
 
-    print_captain("UNFORTUNATELY THE STUDENT WRITING THIS CODE ISN'T SKILLED ENOUGH TO ADD A CLOCK\nSO YOU'LL GET TO KNOW RESULT AFTER YOU SUBMIT");
-    wait(0, 500);
-    press_etr_to_continue();
+    // print_captain("UNFORTUNATELY THE STUDENT WRITING THIS CODE ISN'T SKILLED ENOUGH TO ADD A CLOCK\nSO YOU'LL GET TO KNOW RESULT AFTER YOU SUBMIT");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
-    print_soldier("YES SIR! I'LL TRY MY BEST");
-    press_etr_to_continue();
+    // print_soldier("YES SIR! I'LL TRY MY BEST");
+    // press_etr_to_continue();
 
-    print_captain("GREAT! LETS START: ");
-    wait(0, 500);
-    press_etr_to_continue();
+    // print_captain("GREAT! LETS START: ");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
-    printarmy();
-    press_etr_to_continue();
+    // printarmy();
+    // press_etr_to_continue();
 
     print_captain("ENEMY ARE APPROACHIN SEND 'ENEMY APPROACHING'");
     wait(0, 500);
@@ -329,30 +350,30 @@ void medium_mode()
     system("clear");
     clear_buffer();
     int catch = 0, lev_sum = 0;
-    printf("\n\nCAPTAIN: \n");
-    print_captain("WELCOME MEDIUM MODE OFFICER. HERE YOU'LL HAVE JUST 10 SECONDS TO SEND A MESSAGE\n");
-    wait(0, 500);
-    press_etr_to_continue();
+    // printf("\n\nCAPTAIN: \n");
+    // print_captain("WELCOME MEDIUM MODE OFFICER. HERE YOU'LL HAVE JUST 15 SECONDS TO SEND A MESSAGE\n");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
-    print_soldier("YES SIR!");
-    press_etr_to_continue();
+    // print_soldier("YES SIR!");
+    // press_etr_to_continue();
 
-    print_captain("THERE IS NOT CLOCK YOU'LL GET TIME UPDATE AFTER YOU SUBMIT");
-    wait(0, 500);
-    press_etr_to_continue();
+    // print_captain("THERE IS NOT CLOCK YOU'LL GET TIME UPDATE AFTER YOU SUBMIT");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
-    print_soldier("YES SIR! I UNDERSTAND HIS SKILL ISSUES!");
-    press_etr_to_continue();
+    // print_soldier("YES SIR! I UNDERSTAND HIS SKILL ISSUES!");
+    // press_etr_to_continue();
 
-    print_captain("GREAT! LETS START: ");
-    wait(0, 500);
-    press_etr_to_continue();
+    // print_captain("GREAT! LETS START: ");
+    // wait(0, 500);
+    // press_etr_to_continue();
 
     printf("\n\nCAPTAIN: SCOUT REPORTED ENEMY FORM PATROL SIGHED TO EAST OF BRIDGE. SEND 'ENEMY EAST'\n");
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ENEMY EAST", 10) == 1)
+    if (catch = input_function_wrapper("ENEMY EAST", 15) == 1)
     {
         lev_sum++;
     }
@@ -361,7 +382,7 @@ void medium_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("ENEMY NORTHWEST", 10) == 1)
+    if (catch = input_function_wrapper("ENEMY NORTHWEST", 15) == 1)
     {
         lev_sum++;
     }
@@ -369,7 +390,7 @@ void medium_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("SHELLING NORTH", 10) == 1)
+    if (catch = input_function_wrapper("SHELLING NORTH", 15) == 1)
     {
         lev_sum++;
     }
@@ -377,7 +398,7 @@ void medium_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("KILL BRIDGE", 10) == 1)
+    if (catch = input_function_wrapper("KILL BRIDGE", 15) == 1)
     {
         lev_sum++;
     }
@@ -385,7 +406,7 @@ void medium_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("FOUND GORGE SR", 10) == 1)
+    if (catch = input_function_wrapper("FOUND GORGE SR", 15) == 1)
     {
         lev_sum++;
     }
@@ -415,7 +436,7 @@ void hard_mode()
     clear_buffer();
     int catch = 0, lev_sum = 0;
     printf("\n\nCAPTAIN: \n");
-    print_captain("WELCOE HARD MODE OFFICER. HERE YOU'LL HAVE JUST 7 SECONDS TO SEND A MESSAGE\n");
+    print_captain("WELCOE HARD MODE OFFICER. HERE YOU'LL HAVE JUST 10 SECONDS TO SEND A MESSAGE\n");
     wait(0, 500);
     press_etr_to_continue();
 
@@ -437,7 +458,7 @@ void hard_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("TANK WEST", 7) == 1)
+    if (catch = input_function_wrapper("TANK WEST", 10) == 1)
     {
         lev_sum++;
     }
@@ -446,7 +467,7 @@ void hard_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("SPINER AHEAD", 7) == 1)
+    if (catch = input_function_wrapper("SPINER AHEAD", 10) == 1)
     {
         lev_sum++;
     }
@@ -454,7 +475,7 @@ void hard_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("DEPLOY MANPAD", 7) == 1)
+    if (catch = input_function_wrapper("DEPLOY MANPAD", 10) == 1)
     {
         lev_sum++;
     }
@@ -463,7 +484,7 @@ void hard_mode()
     wait(0, 500);
     press_etr_to_continue();
 
-    if (catch = input_function_wrapper("SHOOT TANK", 7) == 1)
+    if (catch = input_function_wrapper("SHOOT TANK", 10) == 1)
     {
         shoot_tank();
         wait(0, 250);
@@ -494,15 +515,7 @@ void hard_mode()
     
 }
 
-void reverse_mode()
-{
-    printf("CAPTAIN: THIS IS WHERE WE'LL GIVE YOU RANDOM MORSE CODE AND YOU HAVE TO WRITE THE WORD!\nDUE TO STUDENT'S ONGOING EXAMS HE'S UNABLE TO COMPLETE THIS\nWILL BE ADDED SOON");
-}
 
-void practice_mode()
-{
-    print_captain("CAPTAIN: HERE YOU'LL GET RANDOM WORDS AND YOU HAVE TO COMPLETE THEM YOU CAN CHOOSE TIME IN SECONDS\nGOING TODO IT SOON");
-}
 
 void press_etr_to_continue()
 {

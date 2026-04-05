@@ -16,4 +16,7 @@ void hard_mode();
 void reverse_mode();
 void practice_mode();
 
+int audio_init();
+void audio_cleanup();
+
 #endif

@@ -60,7 +60,7 @@ void clear_buffer()
         ;
 }
 
-void print_soldier(char* reply)
+void print_soldier(char *reply)
 {
 
     printf("\n\n");
@@ -86,7 +86,7 @@ void print_soldier(char* reply)
     printf("        ^^^ ^^^\n");
 }
 
-void print_captain(char* order)
+void print_captain(char *order)
 {
     printf("\t\t\t                 _,..---''-.,\n");
     printf("\t\t\t              ,-`,-.         `,\n");
@@ -107,10 +107,9 @@ void print_captain(char* order)
     printf("\t\t\t        /`  /\\__/\\__,/     >._              )\n");
     printf("\t\t\t       /   |__/\\__/  \\____/\\  `-,-.____,.--'\\\n");
 
-    char* pass_by = order;
+    char *pass_by = order;
     typewriter_fast(pass_by, NANO_SEC);
 }
-
 
 void printarmy()
 {
@@ -136,10 +135,8 @@ void printarmy()
     printf("      (___|___)         (___|___)         (___|___)         (___|___)\n");
 }
 
-
-
-
-void shoot_tank() {
+void shoot_tank()
+{
     printf("            _\n");
     printf("    ______,' `._______                   _______\n");
     printf("   (______(   }___,,__) .';-.;',`.;';.`=|_______)\n");
@@ -149,10 +146,8 @@ void shoot_tank() {
     printf("   ----`-------~-------------------\n");
 }
 
-
-
-
-void destroyed_tank() {
+void destroyed_tank()
+{
     printf("                 \\o/\n");
     printf("           __/    (/     o/        \n");
     printf("             )     \\    / )\n");
@@ -169,9 +164,3 @@ void destroyed_tank() {
     printf("    .  '  .  '  .  '  .  '  .  '  .  '  .  '  .  '  .  '  .  '  .  '\n");
     printf("  .   '  .  '  .  '  .  '  .  '  .  '  .  '  .  '  .  '  .  '  .  '  .\n");
 }
-
-
-
-
-
-
